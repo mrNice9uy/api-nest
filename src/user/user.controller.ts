@@ -18,6 +18,7 @@ import { UserEntity } from './Entity/user.entity';
 import { UserService } from './user.service';
 import { IUserCreate } from './user.types';
 import { IID } from 'src/common.types';
+import { UserDtoChange } from './dto/userUpdate.dto';
 
 @ApiTags('Пользователи')
 @Controller('user')
@@ -43,12 +44,12 @@ export class UserController {
     return this.userService.addUser(dto);
   }
 
-  @ApiResponse({ status: 200, type: UserEntity })
+  @ApiResponse({ status: 200, type: Boolean })
   @Put()
-  async updateUser() {
-    return {
-      message: 'update user',
-    };
+  async updateUser(@Body() dto: UserDtoChange, @Req() request, @Res() res) {
+    const response = await this.userService.changeUser(request.user.id, dto);
+
+    return res.send(response);
   }
 
   @ApiBody({ type: UserDtoDelete })

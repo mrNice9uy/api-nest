@@ -32,4 +32,6 @@ export type TChangePassword = {
   newPassword: string;
 };
 
+export type TChangeUser = Omit<IUser, 'password' | 'id' | 'isActive' | 'role'>;
+
 export type UserRole = 'CLIENT' | 'ADMIN';

@@ -5,7 +5,7 @@ import { normalizeUser } from './utils/normalizeUser';
 
 import { compare, genSalt, hash } from 'bcryptjs';
 import { UserDtoLogin } from './dto/userLogin.dto';
-import { IUserCreate, TChangePassword } from './user.types';
+import { IUserCreate, TChangePassword, TChangeUser } from './user.types';
 import { IID } from 'src/common.types';
 
 @Injectable()
@@ -105,6 +105,21 @@ export class UserService {
     const hashPassword = await this.generatePassword(payload.newPassword);
 
     await user.update({ password: hashPassword });
+
+    return true;
+  }
+
+  async changeUser(id: string, payload: TChangeUser) {
+    const user = await this.userRepository.findByPk(id);
+
+    if (!user) {
+      throw new HttpException(
+        'Пользователь не существует',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    await user.update({ ...payload });
 
     return true;
   }
