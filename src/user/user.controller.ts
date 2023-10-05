@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Param,
   Post,
   Put,
   Req,
@@ -37,6 +38,7 @@ export class UserController {
     return this.userService.getUsers();
   }
 
+  @UseGuards(JwtAuthGuard)
   @ApiResponse({ status: 200, type: UserEntity })
   @ApiBody({ type: UserDtoCreate })
   @Post()
@@ -44,6 +46,7 @@ export class UserController {
     return this.userService.addUser(dto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @ApiResponse({ status: 200, type: Boolean })
   @Put()
   async updateUser(@Body() dto: UserDtoChange, @Req() request, @Res() res) {
@@ -52,10 +55,10 @@ export class UserController {
     return res.send(response);
   }
 
-  @ApiBody({ type: UserDtoDelete })
+  @UseGuards(JwtAuthGuard)
   @ApiResponse({ status: 200, type: Boolean })
-  @Delete()
-  async deleteUser(@Body() dto: IID) {
+  @Delete('/id')
+  async deleteUser(@Param() dto: IID) {
     return this.userService.deleteUser(dto);
   }
 
