@@ -29,7 +29,7 @@ export class UserDtoInfo implements IUser {
   phone: string;
   email: string;
   password: string;
-  isActive = false;
+  isActive = true;
   role: UserRole;
 
   constructor(dto: IUserCreate) {
