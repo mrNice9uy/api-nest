@@ -1,18 +1,26 @@
 import React from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { openNotification } from '../../utils/utils';
 import { IUserAuth } from 'src/user/user.types';
 import { loginUser } from './LoginPage.api';
+import { useAuth } from 'src/hooks/useAuth';
 
 export const LoginForm = () => {
+  const { setAuth } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from.pathname || '/';
 
   const onFinish = async (values: IUserAuth) => {
     try {
-      await loginUser(values);
-      navigate('/');
+      const response = await loginUser(values);
+
+      if (response) {
+        setAuth(values);
+        navigate(from, { replace: true });
+      }
     } catch (err) {
       if (!err?.response) {
         openNotification('error', 'Something is wrong!', 'No server response');
