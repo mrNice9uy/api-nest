@@ -38,7 +38,6 @@ export class UserController {
     return this.userService.getUsers();
   }
 
-  @UseGuards(JwtAuthGuard)
   @ApiResponse({ status: 200, type: UserEntity })
   @ApiBody({ type: UserDtoCreate })
   @Post()
