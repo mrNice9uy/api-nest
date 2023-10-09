@@ -16,8 +16,7 @@ export const RegistrationForm = () => {
 
   const onFinish = async (values: IUserCreate) => {
     try {
-      const response = await createUser(values);
-      console.log('res', response);
+      await createUser(values);
       navigate('/services');
     } catch (err) {
       if (!err?.response) {

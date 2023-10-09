@@ -21,7 +21,7 @@ export const useUsersPage = () => {
     { ...reactQueryNoCacheOptions },
   );
 
-  const handleAdduser = useCallback(async (user: IUserCreate) => {
+  const handleAddUser = useCallback(async (user: IUserCreate) => {
     try {
       await addUser(user);
       await refetch();
@@ -51,7 +51,7 @@ export const useUsersPage = () => {
   return {
     data,
     isLoading,
-    handleAdduser,
+    handleAddUser,
     handleEditUser,
     handleDeleteUser,
   };

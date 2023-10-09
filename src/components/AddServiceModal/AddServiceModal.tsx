@@ -1,29 +1,26 @@
-import React from 'react';
 import { Button, Divider, Form, Input, Modal } from 'antd';
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 
 import {
   BUTTON_ITEM_LAYOUT,
-  USER_MODAL_RULES,
   FORM_ITEM_LAYOUT,
 } from '../../constants/constants';
-import { IUserCreate } from 'src/user/user.types';
+import { IServiceCreate } from 'src/service/service.types';
 
-type AddUserModalProps = {
+type AddServiceModalProps = {
   modalVisibility: boolean;
   setModalVisibility: (value: boolean) => void;
-  submitCallback: (values: IUserCreate) => void;
+  submitCallback: (values: IServiceCreate) => void;
 };
-
-export const AddUserModal = ({
+export const AddServiceModal = ({
   modalVisibility,
   setModalVisibility,
   submitCallback,
-}: AddUserModalProps) => {
+}: AddServiceModalProps) => {
   const [form] = Form.useForm();
 
   const onFinish = useCallback(
-    (values: IUserCreate) => {
+    (values: IServiceCreate) => {
       setModalVisibility(false);
       submitCallback(values);
       form.resetFields();
@@ -44,32 +41,13 @@ export const AddUserModal = ({
       onCancel={onCancel}
     >
       <Form onFinish={onFinish} form={form} {...FORM_ITEM_LAYOUT}>
-        <Form.Item
-          id="email"
-          label="Email"
-          name="email"
-          rules={USER_MODAL_RULES.email}
-        >
+        <Form.Item id="name" label="Name" name="name">
           <Input />
         </Form.Item>
-        <Form.Item
-          id="password"
-          label="Password"
-          name="password"
-          rules={[{ required: true, message: 'Please input your password!' }]}
-        >
-          <Input.Password />
-        </Form.Item>
-        <Form.Item id="firstName" label="First Name" name="firstName">
+        <Form.Item id="description" label="Description" name="description">
           <Input />
         </Form.Item>
-        <Form.Item id="middleName" label="Middle Name" name="middleName">
-          <Input />
-        </Form.Item>
-        <Form.Item id="lastName" label="Last Name" name="lastName">
-          <Input />
-        </Form.Item>
-        <Form.Item id="phone" label="Phone" name="phone">
+        <Form.Item id="price" label="Price" name="price">
           <Input />
         </Form.Item>
         <Divider />

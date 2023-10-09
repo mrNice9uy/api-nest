@@ -1,10 +1,6 @@
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { Button, Divider, Popconfirm, Table, message } from 'antd';
-//import { isEmpty } from 'lodash';
 import React, { useCallback, useState } from 'react';
-
-//import AddContact from '../AddContactModal/AddContact';
-//import EditContact from '../EditContactModal/EditContact';
 
 import { useUsersPage } from './useUsersPage';
 import { IUserDTO } from 'src/user/user.types';
@@ -12,12 +8,14 @@ import { USERS_COLUMNS } from 'src/constants/columns';
 import { Spinner } from 'src/components/Spinner';
 import { AddUserModal } from 'src/components/AddUserModal';
 import { EditUserModal } from 'src/components/EditUserModal';
+import * as Styled from './UsersPage.styled';
 
 export const UsersPage = () => {
   const [addModalVisibility, setAddModalVisibility] = useState(false);
   const [editModalVisibility, setEditModalVisibility] = useState(false);
   const [editingKey, setEditingKey] = useState(null);
-  const { data, isLoading, handleAdduser, handleEditUser, handleDeleteUser } =
+
+  const { data, isLoading, handleAddUser, handleEditUser, handleDeleteUser } =
     useUsersPage();
 
   const confirm = useCallback(
@@ -94,18 +92,18 @@ export const UsersPage = () => {
   };
 
   return (
-    <div>
-      <h1>Users</h1>
-      <AddUserModal
-        modalVisibility={addModalVisibility}
-        setModalVisibility={setAddModalVisibility}
-        submitCallback={handleAdduser}
-      />
-
-      <Button type="primary" onClick={() => setAddModalVisibility(true)}>
-        Add User
-      </Button>
-
+    <>
+      <Styled.HeaderContainer>
+        <Styled.Header>Users</Styled.Header>
+        <AddUserModal
+          modalVisibility={addModalVisibility}
+          setModalVisibility={setAddModalVisibility}
+          submitCallback={handleAddUser}
+        />
+        <Button type="primary" onClick={() => setAddModalVisibility(true)}>
+          Add User
+        </Button>
+      </Styled.HeaderContainer>
       <Divider />
       <Spinner spinning={isLoading}>
         <EditUserModal
@@ -122,6 +120,6 @@ export const UsersPage = () => {
           dataSource={renderData(data)}
         />
       </Spinner>
-    </div>
+    </>
   );
 };

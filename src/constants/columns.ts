@@ -40,3 +40,26 @@ export const USERS_COLUMNS = [
     key: 'action',
   },
 ];
+
+export const SERVICE_COLUMNS = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+  },
+  {
+    title: 'Description',
+    dataIndex: 'description',
+    key: 'description',
+  },
+  {
+    title: 'Price',
+    dataIndex: 'price',
+    key: 'price',
+  },
+  {
+    title: 'Action',
+    dataIndex: 'action',
+    key: 'action',
+  },
+];

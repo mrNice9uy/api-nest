@@ -1,31 +1,46 @@
-import React from 'react';
 import { Button, Divider, Form, Input, Modal } from 'antd';
-import { useCallback } from 'react';
+import { isEmpty, pick } from 'lodash';
+import React, { useCallback, useEffect } from 'react';
 
 import {
   BUTTON_ITEM_LAYOUT,
-  USER_MODAL_RULES,
   FORM_ITEM_LAYOUT,
 } from '../../constants/constants';
-import { IUserCreate } from 'src/user/user.types';
+import { IService } from 'src/service/service.types';
 
-type AddUserModalProps = {
+type EditServiceModalProps = {
   modalVisibility: boolean;
+  editingKey: string;
+  serviceData: Partial<IService>;
+  submitCallback: (values: IService) => void;
   setModalVisibility: (value: boolean) => void;
-  submitCallback: (values: IUserCreate) => void;
 };
-
-export const AddUserModal = ({
+export const EditServiceModal = ({
   modalVisibility,
-  setModalVisibility,
   submitCallback,
-}: AddUserModalProps) => {
+  serviceData = {},
+  setModalVisibility,
+  editingKey,
+}: EditServiceModalProps) => {
   const [form] = Form.useForm();
 
+  useEffect(() => {
+    if (!isEmpty(serviceData)) {
+      form.setFieldsValue(
+        pick(serviceData, ['name', 'description', 'price', 'id']),
+      );
+    }
+  });
+
   const onFinish = useCallback(
-    (values: IUserCreate) => {
+    (values: IService) => {
+      const keyValues = {
+        ...values,
+        id: editingKey,
+      };
+      debugger;
+      submitCallback(keyValues);
       setModalVisibility(false);
-      submitCallback(values);
       form.resetFields();
     },
     [setModalVisibility, submitCallback, form],
@@ -37,39 +52,20 @@ export const AddUserModal = ({
 
   return (
     <Modal
-      title="Create a new user"
+      title="Edit user"
       open={modalVisibility}
       afterClose={form.resetFields}
       footer={false}
       onCancel={onCancel}
     >
       <Form onFinish={onFinish} form={form} {...FORM_ITEM_LAYOUT}>
-        <Form.Item
-          id="email"
-          label="Email"
-          name="email"
-          rules={USER_MODAL_RULES.email}
-        >
+        <Form.Item id="name" label="Name" name="name">
           <Input />
         </Form.Item>
-        <Form.Item
-          id="password"
-          label="Password"
-          name="password"
-          rules={[{ required: true, message: 'Please input your password!' }]}
-        >
-          <Input.Password />
-        </Form.Item>
-        <Form.Item id="firstName" label="First Name" name="firstName">
+        <Form.Item id="description" label="Description" name="description">
           <Input />
         </Form.Item>
-        <Form.Item id="middleName" label="Middle Name" name="middleName">
-          <Input />
-        </Form.Item>
-        <Form.Item id="lastName" label="Last Name" name="lastName">
-          <Input />
-        </Form.Item>
-        <Form.Item id="phone" label="Phone" name="phone">
+        <Form.Item id="price" label="Price" name="price">
           <Input />
         </Form.Item>
         <Divider />
@@ -83,7 +79,7 @@ export const AddUserModal = ({
             id="contact-modal-submit-btn"
             htmlType="submit"
           >
-            Add
+            Save
           </Button>
         </Form.Item>
       </Form>

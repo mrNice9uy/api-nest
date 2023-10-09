@@ -53,7 +53,6 @@ export const LoginForm = () => {
       initialValues={{ remember: true }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
-      style={{ margin: '0 auto' }}
     >
       <Form.Item
         name="email"

@@ -62,10 +62,6 @@ export const USER_MODAL_RULES = {
     },
   ],
   email: [
-    /*{
-      type: 'email',
-      message: 'The input is not valid E-mail!',
-    },*/
     {
       required: true,
       message: 'Please input E-mail!',
