@@ -24,11 +24,9 @@ export class AuthController {
   async login(@Body() dto: UserDtoLogin, @Res() res) {
     const response = await this.authService.login(dto);
 
-    debugger;
     if (response instanceof UnauthorizedException) {
       throw response;
     }
-    debugger;
     if ('accessToken' in response) {
       res.cookie('accessToken', response.accessToken, {
         expires: new Date(new Date().getTime() + 30 * 1000),

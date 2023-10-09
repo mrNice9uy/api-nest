@@ -1,17 +1,26 @@
-import { createContext, useState } from 'react';
+import React, { createContext, useState } from 'react';
 import { IUserAuth } from 'src/user/user.types';
 
-type TAuthCintext = {
-  auth?: IUserAuth;
-  setAuth?: (user: IUserAuth) => void;
+type TAuth = IUserAuth & {
+  refreshToken: string;
 };
-export const AuthContext = createContext<TAuthCintext>({});
+type TAuthContext = {
+  auth?: TAuth;
+  setAuth?: (user: TAuth) => void;
+  refreshToken?: string;
+};
+export const AuthContext = createContext<TAuthContext>({});
 
 export const AuthProvider = ({ children }) => {
-  const [auth, setAuth] = useState<IUserAuth>({ email: '', password: '' });
+  const [auth, setAuth] = useState<TAuth>({
+    email: '',
+    password: '',
+    refreshToken: '',
+  });
+  const refreshToken = '';
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth }}>
+    <AuthContext.Provider value={{ auth, setAuth, refreshToken }}>
       {children}
     </AuthContext.Provider>
   );

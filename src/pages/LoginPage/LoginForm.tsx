@@ -6,6 +6,7 @@ import { openNotification } from '../../utils/utils';
 import { IUserAuth } from 'src/user/user.types';
 import { loginUser } from './LoginPage.api';
 import { useAuth } from 'src/hooks/useAuth';
+import { getUser } from '../UsersPage/UsersPage.api';
 
 export const LoginForm = () => {
   const { setAuth } = useAuth();
@@ -15,10 +16,14 @@ export const LoginForm = () => {
 
   const onFinish = async (values: IUserAuth) => {
     try {
-      const response = await loginUser(values);
+      const response = await loginUser(values, {
+        withCredentials: true,
+      });
 
       if (response) {
-        setAuth(values);
+        const refreshToken = response.data.refreshToken;
+        await getUser({ withCredentials: true });
+        setAuth({ ...values, refreshToken });
         navigate(from, { replace: true });
       }
     } catch (err) {

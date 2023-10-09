@@ -1,4 +1,4 @@
-import { Button, Divider, Form, Input, Modal, Checkbox } from 'antd';
+import { Button, Divider, Form, Input, Modal } from 'antd';
 import { isEmpty, pick } from 'lodash';
 import React, { useCallback, useEffect } from 'react';
 
@@ -81,9 +81,6 @@ export const EditUserModal = ({
         </Form.Item>
         <Form.Item id="phone" label="Phone" name="phone">
           <Input />
-        </Form.Item>
-        <Form.Item id="isActive" label="Is active" name="isActive">
-          <Checkbox />
         </Form.Item>
         <Divider />
         <Form.Item {...BUTTON_ITEM_LAYOUT}>

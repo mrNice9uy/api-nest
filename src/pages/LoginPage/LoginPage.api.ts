@@ -11,7 +11,7 @@ export const createUser = (params: IUserCreate, config?: AxiosRequestConfig) =>
 export const loginUser = (params: IUserAuth, config?: AxiosRequestConfig) =>
   api
     .post<TRefreshToken>('/auth/login', params, config)
-    .then(({ data }) => data)
+    .then((data) => data)
     .catch(({ response }) =>
       openNotification('error', response.data.status, response.data.message),
     );

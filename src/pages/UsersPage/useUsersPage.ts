@@ -5,8 +5,10 @@ import { addUser, deleteUser, editUser, getUsers } from './UsersPage.api';
 import { openNotification } from 'src/utils/utils';
 import { useCallback } from 'react';
 import { IUserCreate, IUserDTO } from 'src/user/user.types';
+import { useAuth } from 'src/hooks/useAuth';
 
 export const useUsersPage = () => {
+  const { auth } = useAuth();
   const { isLoading, data, refetch } = useQuery(
     ['getUsers'],
     async () => {
@@ -30,12 +32,7 @@ export const useUsersPage = () => {
 
   const handleEditUser = useCallback(async (data: IUserDTO) => {
     try {
-      debugger;
-      const dt = {
-        ...data,
-        isActive: true,
-      };
-      await editUser(dt);
+      await editUser(data, { withCredentials: true });
       await refetch();
     } catch (err) {
       openNotification('error', err.response?.status, err.response?.data);
@@ -44,7 +41,7 @@ export const useUsersPage = () => {
 
   const handleDeleteUser = useCallback(async (id: string) => {
     try {
-      await deleteUser(id);
+      await deleteUser(id, { withCredentials: true });
       await refetch();
     } catch (err) {
       openNotification('error', err.response?.status, err.response?.data);
@@ -59,25 +56,3 @@ export const useUsersPage = () => {
     handleDeleteUser,
   };
 };
-
-/*
-
-const onFinish = async (values: IUserCreate) => {
-    try {
-      await createUser(values);
-      navigate('/services');
-    } catch (err) {
-      if (!err?.response) {
-        openNotification('error', 'Something is wrong!', 'No server response');
-      } else if (err.response?.status === 404) {
-        openNotification(
-          'error',
-          err.response?.status,
-          err.response?.statusText,
-        );
-      } else {
-        openNotification('error', err.response?.status, err.response?.data);
-      }
-    }
-  };
- */
