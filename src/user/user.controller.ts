@@ -56,7 +56,7 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @ApiResponse({ status: 200, type: Boolean })
-  @Delete('/id')
+  @Delete('/:id')
   async deleteUser(@Param() dto: IID) {
     return this.userService.deleteUser(dto);
   }
