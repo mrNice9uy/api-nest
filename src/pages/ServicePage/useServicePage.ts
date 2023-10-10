@@ -17,8 +17,8 @@ export const useServicePage = () => {
     async () => {
       try {
         return await getServices();
-      } catch {
-        console.log('err.');
+      } catch (err) {
+        openNotification('error', err.response?.status, err.response?.data);
       }
     },
     { ...reactQueryNoCacheOptions },

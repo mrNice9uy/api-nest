@@ -36,6 +36,7 @@ export const EditServiceModal = ({
       submitCallback(values);
       setModalVisibility(false);
       form.resetFields();
+      localStorage.removeItem('editingKey');
     },
     [setModalVisibility, submitCallback, form],
   );

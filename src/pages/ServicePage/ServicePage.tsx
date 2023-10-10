@@ -36,6 +36,7 @@ export const ServicePage = () => {
   const onEditService = useCallback(
     (item: IService) => {
       setEditingKey(item.id);
+      localStorage.setItem('editingKey', item.id);
       setEditModalVisibility(true);
     },
     [setEditModalVisibility],

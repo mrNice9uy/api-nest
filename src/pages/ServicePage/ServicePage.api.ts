@@ -22,10 +22,10 @@ export const createService = (
     );
 
 export const editService = (params: IService, config?: AxiosRequestConfig) => {
-  const { id, ...other } = params;
+  const id = localStorage.getItem('editingKey');
 
   return api
-    .put<IService>(`/service/${id}`, other, config)
+    .put<IService>(`/service/${id}`, params, config)
     .then(({ data }) => data)
     .catch(({ response }) =>
       openNotification('error', response.data.status, response.data.message),
