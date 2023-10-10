@@ -1,7 +1,6 @@
 import { api } from 'src/api/setupAPI';
 import { AxiosRequestConfig } from 'axios';
 import { IUser, IUserCreate, IUserDTO } from 'src/user/user.types';
-import { openNotification } from 'src/utils/utils';
 
 export const getUser = (config?: AxiosRequestConfig) =>
   api.get<IUserDTO>('/user', config).then((data) => data);
@@ -15,10 +14,17 @@ export const addUser = (params: IUserCreate, config?: AxiosRequestConfig) =>
 export const editUser = (params: IUserDTO, config?: AxiosRequestConfig) =>
   api
     .put<IUserDTO>('/user', params, config)
-    .then(({ data }) => data)
-    .catch(({ response }) =>
-      openNotification('error', response.data.status, response.data.message),
-    );
+    .then((data) => data)
+    .catch(({ response }) => {
+      console.log(response.data.message);
+      return response;
+    });
 
 export const deleteUser = (id: string, config?: AxiosRequestConfig) =>
-  api.delete(`/user/${id}`, config).then(() => true);
+  api
+    .delete(`/user/${id}`, config)
+    .then((response) => response)
+    .catch(({ response }) => {
+      console.log(response.data.message);
+      return response;
+    });

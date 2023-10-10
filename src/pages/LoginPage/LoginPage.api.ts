@@ -13,8 +13,21 @@ export const loginUser = (params: IUserAuth, config?: AxiosRequestConfig) =>
     .post<TRefreshToken>('/auth/login', params, config)
     .then((data) => data)
     .catch(({ response }) =>
-      openNotification('error', response.data.status, response.data.message),
+      openNotification(
+        'error',
+        response.data.statusCode,
+        response.data.message,
+      ),
     );
 
 export const logoutUser = (params: undefined, config?: AxiosRequestConfig) =>
   api.post('/auth/logout', params, config).then(() => true);
+
+export const postRefreshToken = (
+  params: TRefreshToken,
+  config?: AxiosRequestConfig,
+) =>
+  api
+    .post('/auth/refresh-token', params, config)
+    .then(() => true)
+    .catch(({ response }) => response);

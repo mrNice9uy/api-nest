@@ -21,14 +21,14 @@ export const RegistrationForm = () => {
     } catch (err) {
       if (!err?.response) {
         openNotification('error', 'Something is wrong!', 'No server response');
-      } else if (err.response?.status === 404) {
+      } else if (err.response?.statusCode === 404) {
         openNotification(
           'error',
-          err.response?.status,
-          err.response?.statusText,
+          err.response?.statusCode,
+          err.response?.message,
         );
       } else {
-        openNotification('error', err.response?.status, err.response?.data);
+        openNotification('error', err.response?.statusCode, err.response?.data);
       }
     }
   };

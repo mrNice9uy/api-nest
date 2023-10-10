@@ -27,19 +27,17 @@ export const editService = (params: IService, config?: AxiosRequestConfig) => {
   return api
     .put<IService>(`/service/${id}`, params, config)
     .then(({ data }) => data)
-    .catch(({ response }) =>
-      openNotification('error', response.data.status, response.data.message),
-    );
+    .catch(({ response }) => {
+      console.log(response.data.message);
+      return response;
+    });
 };
 
 export const deleteService = (id: string, config?: AxiosRequestConfig) =>
   api
     .delete(`/service/${id}`, config)
-    .then(() => true)
-    .catch(({ response }) =>
-      openNotification(
-        'error',
-        response.data.statusCode,
-        response.data.message,
-      ),
-    );
+    .then((response) => response)
+    .catch(({ response }) => {
+      console.log(response.data.message);
+      return response;
+    });

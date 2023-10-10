@@ -18,7 +18,7 @@ export const useServicePage = () => {
       try {
         return await getServices();
       } catch (err) {
-        openNotification('error', err.response?.status, err.response?.data);
+        openNotification('error', err.response?.statusCode, err.response?.data);
       }
     },
     { ...reactQueryNoCacheOptions },
@@ -29,7 +29,7 @@ export const useServicePage = () => {
       await createService(service, { withCredentials: true });
       await refetch();
     } catch (err) {
-      openNotification('error', err.response?.status, err.response?.data);
+      openNotification('error', err.response?.statusCode, err.response?.data);
     }
   }, []);
 
@@ -38,7 +38,7 @@ export const useServicePage = () => {
       await editService(data, { withCredentials: true });
       await refetch();
     } catch (err) {
-      openNotification('error', err.response?.status, err.response?.data);
+      openNotification('error', err.response?.statusCode, err.response?.data);
     }
   }, []);
 
@@ -47,7 +47,7 @@ export const useServicePage = () => {
       await deleteService(id, { withCredentials: true });
       await refetch();
     } catch (err) {
-      openNotification('error', err.response?.status, err.response?.data);
+      openNotification('error', err.response?.statusCode, err.response?.data);
     }
   }, []);
 
