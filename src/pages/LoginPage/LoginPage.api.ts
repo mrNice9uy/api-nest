@@ -15,3 +15,6 @@ export const loginUser = (params: IUserAuth, config?: AxiosRequestConfig) =>
     .catch(({ response }) =>
       openNotification('error', response.data.status, response.data.message),
     );
+
+export const logoutUser = (params: undefined, config?: AxiosRequestConfig) =>
+  api.post('/auth/logout', params, config).then(() => true);
