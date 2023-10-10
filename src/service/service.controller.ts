@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Param,
   Post,
   Put,
   Query,
@@ -37,21 +38,21 @@ export class ServiceController {
   @ApiCookieAuth()
   @ApiResponse({ status: 200, type: ServiceEntity })
   @Get('/:id')
-  async find(@Query() query: IID) {
+  async find(@Param() query: IID) {
     return this.serviceService.findById(query.id);
   }
 
   @ApiCookieAuth()
   @ApiResponse({ status: 200, type: ServiceEntity })
   @Put('/:id')
-  async update(@Query() query: IID, @Body() option: ServiceDtoUpdate) {
+  async update(@Param() query: IID, @Body() option: ServiceDtoUpdate) {
     return this.serviceService.updateById(query.id, option);
   }
 
   @ApiCookieAuth()
   @ApiResponse({ status: 200, type: ServiceEntity })
   @Delete('/:id')
-  async delete(@Query() query: IID) {
+  async delete(@Param() query: IID) {
     return this.serviceService.deleteById(query.id);
   }
 }
