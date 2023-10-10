@@ -5,10 +5,8 @@ import { addUser, deleteUser, editUser, getUsers } from './UsersPage.api';
 import { openNotification } from 'src/utils/utils';
 import { useCallback } from 'react';
 import { IUserCreate, IUserDTO } from 'src/user/user.types';
-import { useAuth } from 'src/hooks/useAuth';
 
 export const useUsersPage = () => {
-  const { auth } = useAuth();
   const { isLoading, data, refetch } = useQuery(
     ['getUsers'],
     async () => {

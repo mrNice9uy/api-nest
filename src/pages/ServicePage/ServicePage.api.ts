@@ -24,7 +24,6 @@ export const createService = (
 export const editService = (params: IService, config?: AxiosRequestConfig) => {
   const { id, ...other } = params;
 
-  debugger;
   return api
     .put<IService>(`/service/${id}`, other, config)
     .then(({ data }) => data)
@@ -34,4 +33,13 @@ export const editService = (params: IService, config?: AxiosRequestConfig) => {
 };
 
 export const deleteService = (id: string, config?: AxiosRequestConfig) =>
-  api.delete(`/service/${id}`, config).then(() => true);
+  api
+    .delete(`/service/${id}`, config)
+    .then(() => true)
+    .catch(({ response }) =>
+      openNotification(
+        'error',
+        response.data.statusCode,
+        response.data.message,
+      ),
+    );

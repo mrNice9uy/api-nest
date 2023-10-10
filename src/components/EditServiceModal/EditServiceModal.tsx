@@ -20,7 +20,6 @@ export const EditServiceModal = ({
   submitCallback,
   serviceData = {},
   setModalVisibility,
-  editingKey,
 }: EditServiceModalProps) => {
   const [form] = Form.useForm();
 
@@ -34,12 +33,7 @@ export const EditServiceModal = ({
 
   const onFinish = useCallback(
     (values: IService) => {
-      const keyValues = {
-        ...values,
-        id: editingKey,
-      };
-      debugger;
-      submitCallback(keyValues);
+      submitCallback(values);
       setModalVisibility(false);
       form.resetFields();
     },
