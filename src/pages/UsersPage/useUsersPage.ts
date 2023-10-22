@@ -8,8 +8,11 @@ import { IUserCreate, IUserDTO } from 'src/user/user.types';
 import { useAuth } from 'src/hooks/useAuth';
 import { postRefreshToken } from '../LoginPage/LoginPage.api';
 import { useNavigate } from 'react-router';
+import { usersSelectors } from 'src/store/selectors';
+import { useUsersStore } from 'src/store';
 
 export const useUsersPage = () => {
+  const { setUser } = useUsersStore(usersSelectors.users);
   const { auth } = useAuth();
   const navigate = useNavigate();
   const { isLoading, data, refetch } = useQuery(
@@ -26,6 +29,7 @@ export const useUsersPage = () => {
 
   const handleAddUser = useCallback(async (user: IUserCreate) => {
     try {
+      setUser(user);
       await addUser(user);
       await refetch();
     } catch (err) {

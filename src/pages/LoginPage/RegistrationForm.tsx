@@ -9,14 +9,18 @@ import {
 import { openNotification } from '../../utils/utils';
 import { IUserCreate } from 'src/user/user.types';
 import { createUser } from './LoginPage.api';
+import { useUsersStore } from 'src/store';
+import { usersSelectors } from 'src/store/selectors';
 
 export const RegistrationForm = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
+  const { setUser } = useUsersStore(usersSelectors.users);
 
   const onFinish = async (values: IUserCreate) => {
     try {
       await createUser(values);
+      setUser(values);
       navigate('/services');
     } catch (err) {
       if (!err?.response) {
