@@ -27,7 +27,6 @@ export class AuthController {
     if (response instanceof UnauthorizedException) {
       throw response;
     }
-
     if ('accessToken' in response) {
       res.cookie('accessToken', response.accessToken, {
         expires: new Date(new Date().getTime() + 30 * 1000),
